@@ -142,6 +142,7 @@ namespace ts.formatting {
             return container.kind === SyntaxKind.RegularExpressionLiteral;
         }
 
+        //may be relevant
         function shouldRescanTemplateToken(container: Node): boolean {
             return container.kind === SyntaxKind.TemplateMiddle ||
                 container.kind === SyntaxKind.TemplateTail;

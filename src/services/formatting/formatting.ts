@@ -605,7 +605,7 @@ namespace ts.formatting {
 
                 while (formattingScanner.isOnToken()) {
                     // proceed any parent tokens that are located prior to child.getStart()
-                    const tokenInfo = formattingScanner.readTokenInfo(node);
+                    const tokenInfo = formattingScanner.readTokenInfo(node); //node is just the SourceFile, so not too useful...
                     if (tokenInfo.token.end > childStartPos) {
                         // stop when formatting scanner advances past the beginning of the child
                         break;
@@ -678,6 +678,7 @@ namespace ts.formatting {
                 let inheritedIndentation = Constants.Unknown;
                 for (let i = 0; i < nodes.length; i++) {
                     const child = nodes[i];
+                    //node is the closed-over node, the SourceFile
                     inheritedIndentation = processChildNode(child, inheritedIndentation, node, listDynamicIndentation, startLine, startLine, /*isListItem*/ true, /*isFirstListItem*/ i === 0);
                 }
 
