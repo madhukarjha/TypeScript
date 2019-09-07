@@ -6,15 +6,13 @@ enum V {}
 >V : V
 
 let x: number|string|E|V;
->x : number | string | E | V
->E : E
->V : V
+>x : string | number | E | V
 
 if (typeof x === "number") {
 >typeof x === "number" : boolean
->typeof x : string
->x : number | string | E | V
->"number" : string
+>typeof x : "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number | E | V
+>"number" : "number"
 
     x; // number|E|V
 >x : number | E | V
@@ -26,15 +24,15 @@ else {
 
 if (typeof x !== "number") {
 >typeof x !== "number" : boolean
->typeof x : string
->x : number | string
->"number" : string
+>typeof x : "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"
+>x : string | number | E | V
+>"number" : "number"
 
     x; // string
 >x : string
 }
 else {
     x; // number|E|V
->x : number
+>x : number | E | V
 }
 

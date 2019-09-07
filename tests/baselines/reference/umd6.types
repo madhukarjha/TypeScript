@@ -8,7 +8,6 @@ let y: number = Foo.fn();
 >fn : () => number
 
 === tests/cases/conformance/externalModules/foo.d.ts ===
-
 declare namespace Thing {
 >Thing : typeof Thing
 
@@ -19,5 +18,5 @@ export = Thing;
 >Thing : typeof Thing
 
 export as namespace Foo;
->Foo : any
+>Foo : typeof Thing
 

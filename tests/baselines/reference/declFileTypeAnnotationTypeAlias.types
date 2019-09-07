@@ -1,14 +1,12 @@
 === tests/cases/compiler/declFileTypeAnnotationTypeAlias.ts ===
-
 module M {
 >M : typeof M
 
     export type Value = string | number | boolean;
->Value : string | number | boolean
+>Value : Value
 
     export var x: Value;
->x : string | number | boolean
->Value : string | number | boolean
+>x : Value
 
     export class c {
 >c : c
@@ -16,7 +14,6 @@ module M {
 
     export type C = c;
 >C : c
->c : c
 
     export module m {
 >m : typeof m
@@ -29,16 +26,12 @@ module M {
     export type MC = m.c;
 >MC : m.c
 >m : any
->c : m.c
 
     export type fc = () => c;
->fc : () => c
->c : c
+>fc : fc
 }
 
 interface Window {
->Window : Window
-
     someMethod();
 >someMethod : () => any
 }
@@ -47,8 +40,7 @@ module M {
 >M : typeof M
 
     export type W = Window | string;
->W : Window | string
->Window : Window
+>W : W
 
     export module N {
 >N : typeof N
@@ -57,7 +49,6 @@ module M {
 >Window : Window
 
         export var p: W;
->p : Window | string
->W : Window | string
+>p : W
     }
 }

@@ -1,14 +1,14 @@
 === tests/cases/conformance/parser/ecmascript5/StrictMode/parserStrictMode16.ts ===
 "use strict";
->"use strict" : string
+>"use strict" : "use strict"
 
 delete this;
 >delete this : boolean
->this : any
+>this : typeof globalThis
 
 delete 1;
 >delete 1 : boolean
->1 : number
+>1 : 1
 
 delete null;
 >delete null : boolean
@@ -16,5 +16,5 @@ delete null;
 
 delete "a";
 >delete "a" : boolean
->"a" : string
+>"a" : "a"
 

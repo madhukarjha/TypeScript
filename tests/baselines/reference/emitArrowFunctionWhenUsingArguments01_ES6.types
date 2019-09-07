@@ -6,8 +6,8 @@ var a = () => {
     var arg = arguments[0];  // error
 >arg : any
 >arguments[0] : any
->arguments : IArguments
->0 : number
+>arguments : any
+>0 : 0
 }
 
 var b = function () {
@@ -22,7 +22,7 @@ var b = function () {
 >arg : any
 >arguments[0] : any
 >arguments : IArguments
->0 : number
+>0 : 0
     }
 }
 
@@ -36,7 +36,7 @@ function baz() {
 >arg : any
 >arguments[0] : any
 >arguments : IArguments
->0 : number
+>0 : 0
 	}
 }
 
@@ -52,8 +52,8 @@ foo(() => {
     var arg = arguments[0];  // error
 >arg : any
 >arguments[0] : any
->arguments : IArguments
->0 : number
+>arguments : any
+>0 : 0
 
 });
 
@@ -64,7 +64,7 @@ function bar() {
 >arg : any
 >arguments[0] : any
 >arguments : IArguments
->0 : number
+>0 : 0
 }
 
 
@@ -78,6 +78,6 @@ function bar() {
 >arg : any
 >arguments[0] : any
 >arguments : IArguments
->0 : number
+>0 : 0
 	}
 }

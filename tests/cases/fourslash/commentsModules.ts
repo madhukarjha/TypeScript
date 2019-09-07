@@ -96,156 +96,92 @@
 ////}
 ////var myComp/*35*/lexVal = new compl/*36*/exM.m/*37*/2./*38*/c().f/*39*/oo2().f/*40*/oo();
 
-goTo.marker('1');
-verify.quickInfoIs("namespace m1", "Namespace comment");
+verify.quickInfoAt("1", "namespace m1", "Namespace comment");
 
-goTo.marker('2');
-verify.completionListContains("b", "var m1.b: number", "b's comment");
-verify.completionListContains("foo", "function foo(): number", "foo's comment");
+verify.completions({
+    marker: "2",
+    includes: [
+        { name: "b", text: "var b: number", documentation: "b's comment" },
+        { name: "foo", text: "function foo(): number", documentation: "foo's comment" },
+    ],
+});
 
-goTo.marker('3');
-verify.currentSignatureHelpDocCommentIs("foo's comment");
-goTo.marker('3q');
-verify.quickInfoIs("function foo(): number", "foo's comment");
+verify.signatureHelp({ marker: "3", docComment: "foo's comment" });
+verify.quickInfoAt("3q", "function foo(): number", "foo's comment");
 
-goTo.marker('4');
-verify.completionListContains("m1", "namespace m1", "Namespace comment");
+verify.completions(
+    { marker: "4", includes: { name: "m1", text: "namespace m1", documentation: "Namespace comment" } },
+    {
+        marker: "5",
+        includes: [
+            { name: "b", text: "var m1.b: number", documentation: "b's comment" },
+            { name: "fooExport", text: "function m1.fooExport(): number", documentation: "exported function" },
+            { name: "m2", text: "namespace m1.m2", documentation: "m2 comments" },
+        ],
+    },
+);
 
-goTo.marker('5');
-verify.memberListContains("b", "var m1.b: number", "b's comment");
-verify.memberListContains("fooExport", "function m1.fooExport(): number", "exported function");
-verify.memberListContains("m2", "namespace m1.m2");
-verify.quickInfoIs("function m1.fooExport(): number", "exported function");
+verify.quickInfoAt("5", "function m1.fooExport(): number", "exported function");
 
-goTo.marker('6');
-verify.currentSignatureHelpDocCommentIs("exported function");
+verify.signatureHelp({ marker: "6", docComment: "exported function" });
 
-goTo.marker('7');
-verify.quickInfoIs("var myvar: m1.m2.c", "");
+verify.quickInfoAt("7", "var myvar: m1.m2.c");
 
-goTo.marker('8');
-verify.quickInfoIs("constructor m1.m2.c(): m1.m2.c", "");
-verify.memberListContains("c", "constructor m1.m2.c(): m1.m2.c", "");
-verify.memberListContains("i", "var m1.m2.i: m1.m2.c", "i");
+verify.quickInfoAt("8", "constructor m1.m2.c(): m1.m2.c", "class comment;");
+verify.completions(
+    {
+        marker: "8",
+        includes: [
+            { name: "c", text: "constructor m1.m2.c(): m1.m2.c", documentation: "class comment;" },
+            { name: "i", text: "var m1.m2.i: m1.m2.c", documentation: "i" },
+        ],
+    }
+);
 
-goTo.marker('9');
-verify.completionListContains("m2", "namespace m2", "");
-verify.quickInfoIs("namespace m2", "");
+function both(marker: string, name: string, text: string, documentation?: string) {
+    verify.completions({ marker, includes: { name, text, documentation } });
+    verify.quickInfoAt(marker, text, documentation);
+}
 
-goTo.marker('10');
-verify.memberListContains("m3", "namespace m2.m3");
-verify.quickInfoIs("namespace m2.m3", "namespace comment of m2.m3");
+both("9", "m2", "namespace m2", "namespace comment of m2.m3");
+both("10", "m3", "namespace m2.m3", "namespace comment of m2.m3");
+both("11", "c", "constructor m2.m3.c(): m2.m3.c", "Exported class comment");
+both("12", "m3", "namespace m3", "namespace comment of m3.m4.m5");
+both("13", "m4", "namespace m3.m4", "namespace comment of m3.m4.m5");
+both("14", "m5", "namespace m3.m4.m5", "namespace comment of m3.m4.m5");
+both("15", "c", "constructor m3.m4.m5.c(): m3.m4.m5.c", "Exported class comment");
 
-goTo.marker('11');
-verify.quickInfoIs("constructor m2.m3.c(): m2.m3.c", "");
-verify.memberListContains("c", "constructor m2.m3.c(): m2.m3.c", "");
+both("16", "m4", "namespace m4", "namespace comment of m4.m5.m6");
+both("17", "m5", "namespace m4.m5", "namespace comment of m4.m5.m6");
+both("18", "m6", "namespace m4.m5.m6", "namespace comment of m4.m5.m6");
+both("19", "m7", "namespace m4.m5.m6.m7");
 
-goTo.marker('12');
-verify.completionListContains("m3", "namespace m3", "");
-verify.quickInfoIs("namespace m3", "");
+verify.completions({
+    marker: "20",
+    includes: { name: "c", text: "constructor m4.m5.m6.m7.c(): m4.m5.m6.m7.c", documentation: "Exported class comment" },
+});
+verify.quickInfoAt("20", "constructor m4.m5.m6.m7.c(): m4.m5.m6.m7.c", "Exported class comment");
 
-goTo.marker('13');
-verify.memberListContains("m4", "namespace m3.m4", "");
-verify.quickInfoIs("namespace m3.m4", "");
+both("21", "m5", "namespace m5", "namespace comment of m5.m6.m7");
+both("22", "m6", "namespace m5.m6", "namespace comment of m5.m6.m7");
+both("23", "m7", "namespace m5.m6.m7", "namespace comment of m5.m6.m7");
+both("24", "m8", "namespace m5.m6.m7.m8", "namespace m8 comment");
+both("25", "c", "constructor m5.m6.m7.m8.c(): m5.m6.m7.m8.c", "Exported class comment");
+both("26", "m6", "namespace m6");
+both("27", "m7", "namespace m6.m7");
+both("28", "m8", "namespace m6.m7.m8");
+both("29", "c", "constructor m6.m7.m8.c(): m6.m7.m8.c", "Exported class comment");
+both("30", "m7", "namespace m7");
+both("31", "m8", "namespace m7.m8");
+both("32", "m9", "namespace m7.m8.m9", "namespace m9 comment");
+both("33", "c", "constructor m7.m8.m9.c(): m7.m8.m9.c", "Exported class comment");
+both("34", "c", "class c");
 
-goTo.marker('14');
-verify.memberListContains("m5", "namespace m3.m4.m5");
-verify.quickInfoIs("namespace m3.m4.m5", "namespace comment of m3.m4.m5");
-
-goTo.marker('15');
-verify.quickInfoIs("constructor m3.m4.m5.c(): m3.m4.m5.c", "");
-verify.memberListContains("c", "constructor m3.m4.m5.c(): m3.m4.m5.c", "");
-
-goTo.marker('16');
-verify.completionListContains("m4", "namespace m4", "");
-verify.quickInfoIs("namespace m4", "");
-
-goTo.marker('17');
-verify.memberListContains("m5", "namespace m4.m5", "");
-verify.quickInfoIs("namespace m4.m5", "");
-
-goTo.marker('18');
-verify.memberListContains("m6", "namespace m4.m5.m6");
-verify.quickInfoIs("namespace m4.m5.m6", "namespace comment of m4.m5.m6");
-
-goTo.marker('19');
-verify.memberListContains("m7", "namespace m4.m5.m6.m7");
-verify.quickInfoIs("namespace m4.m5.m6.m7", "");
-
-goTo.marker('20');
-verify.memberListContains("c", "constructor m4.m5.m6.m7.c(): m4.m5.m6.m7.c", "");
-verify.quickInfoIs("constructor m4.m5.m6.m7.c(): m4.m5.m6.m7.c", "");
-
-goTo.marker('21');
-verify.completionListContains("m5", "namespace m5");
-verify.quickInfoIs("namespace m5", "");
-
-goTo.marker('22');
-verify.memberListContains("m6", "namespace m5.m6");
-verify.quickInfoIs("namespace m5.m6", "");
-
-goTo.marker('23');
-verify.memberListContains("m7", "namespace m5.m6.m7");
-verify.quickInfoIs("namespace m5.m6.m7", "namespace comment of m5.m6.m7");
-
-goTo.marker('24');
-verify.memberListContains("m8", "namespace m5.m6.m7.m8");
-verify.quickInfoIs("namespace m5.m6.m7.m8", "namespace m8 comment");
-
-goTo.marker('25');
-verify.memberListContains("c", "constructor m5.m6.m7.m8.c(): m5.m6.m7.m8.c", "");
-verify.quickInfoIs("constructor m5.m6.m7.m8.c(): m5.m6.m7.m8.c", "");
-
-goTo.marker('26');
-verify.completionListContains("m6", "namespace m6");
-verify.quickInfoIs("namespace m6", "");
-
-goTo.marker('27');
-verify.memberListContains("m7", "namespace m6.m7");
-verify.quickInfoIs("namespace m6.m7", "");
-
-goTo.marker('28');
-verify.memberListContains("m8", "namespace m6.m7.m8");
-verify.quickInfoIs("namespace m6.m7.m8", "");
-
-goTo.marker('29');
-verify.memberListContains("c", "constructor m6.m7.m8.c(): m6.m7.m8.c", "");
-verify.quickInfoIs("constructor m6.m7.m8.c(): m6.m7.m8.c", "");
-
-goTo.marker('30');
-verify.completionListContains("m7", "namespace m7");
-verify.quickInfoIs("namespace m7", "");
-
-goTo.marker('31');
-verify.memberListContains("m8", "namespace m7.m8");
-verify.quickInfoIs("namespace m7.m8", "");
-
-goTo.marker('32');
-verify.memberListContains("m9", "namespace m7.m8.m9");
-verify.quickInfoIs("namespace m7.m8.m9", "namespace m9 comment");
-
-goTo.marker('33');
-verify.memberListContains("c", "constructor m7.m8.m9.c(): m7.m8.m9.c", "");
-verify.quickInfoIs("constructor m7.m8.m9.c(): m7.m8.m9.c", "");
-
-goTo.marker('34');
-verify.completionListContains("c", 'class c', "");
-verify.quickInfoIs('class c', "");
-
-goTo.marker('35');
-verify.quickInfoIs("var myComplexVal: number", "");
-
-goTo.marker('36');
-verify.quickInfoIs("namespace complexM", "");
-
-goTo.marker('37');
-verify.quickInfoIs("namespace complexM.m2", "");
-
-goTo.marker('38');
-verify.quickInfoIs("constructor complexM.m2.c(): complexM.m2.c", "");
-
-goTo.marker('39');
-verify.quickInfoIs("(method) complexM.m2.c.foo2(): complexM.m1.c", "");
-
-goTo.marker('40');
-verify.quickInfoIs("(method) complexM.m1.c.foo(): number", "");
+verify.quickInfos({
+    35: "var myComplexVal: number",
+    36: "namespace complexM",
+    37: "namespace complexM.m2",
+    38: "constructor complexM.m2.c(): complexM.m2.c",
+    39: "(method) complexM.m2.c.foo2(): complexM.m1.c",
+    40: "(method) complexM.m1.c.foo(): number",
+});

@@ -1,24 +1,16 @@
 === tests/cases/compiler/recursiveUnionTypeInference.ts ===
 interface Foo<T> {
->Foo : Foo<T>
->T : T
-
     x: T;
 >x : T
->T : T
 }
 
 function bar<T>(x: Foo<T> | string): T {
->bar : <T>(x: Foo<T> | string) => T
->T : T
->x : Foo<T> | string
->Foo : Foo<T>
->T : T
->T : T
+>bar : <T>(x: string | Foo<T>) => T
+>x : string | Foo<T>
 
     return bar(x);
 >bar(x) : T
->bar : <T>(x: Foo<T> | string) => T
->x : Foo<T> | string
+>bar : <T>(x: string | Foo<T>) => T
+>x : string | Foo<T>
 }
 

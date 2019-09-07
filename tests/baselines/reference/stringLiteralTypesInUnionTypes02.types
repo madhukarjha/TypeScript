@@ -1,30 +1,28 @@
 === tests/cases/conformance/types/stringLiteral/stringLiteralTypesInUnionTypes02.ts ===
-
 type T = string | "foo" | "bar" | "baz";
->T : string | "foo" | "bar" | "baz"
+>T : string
 
 var x: "foo" | "bar" | "baz" | string = undefined;
->x : "foo" | "bar" | "baz" | string
+>x : string
 >undefined : undefined
 
 var y: T = undefined;
->y : string | "foo" | "bar" | "baz"
->T : string | "foo" | "bar" | "baz"
+>y : string
 >undefined : undefined
 
 if (x === "foo") {
 >x === "foo" : boolean
 >x : string
->"foo" : string
+>"foo" : "foo"
 
     let a = x;
 >a : string
->x : string
+>x : "foo"
 }
 else if (x !== "bar") {
 >x !== "bar" : boolean
 >x : string
->"bar" : string
+>"bar" : "bar"
 
     let b = x || y;
 >b : string
@@ -35,7 +33,7 @@ else if (x !== "bar") {
 else {
     let c = x;
 >c : string
->x : string
+>x : "bar"
 
     let d = y;
 >d : string
@@ -43,7 +41,7 @@ else {
 
     let e: (typeof x) | (typeof y) = c || d;
 >e : string
->x : string
+>x : "bar"
 >y : string
 >c || d : string
 >c : string
@@ -52,11 +50,11 @@ else {
 
 x = y;
 >x = y : string
->x : "foo" | "bar" | "baz" | string
+>x : string
 >y : string
 
 y = x;
 >y = x : string
->y : string | "foo" | "bar" | "baz"
+>y : string
 >x : string
 

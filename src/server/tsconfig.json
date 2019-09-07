@@ -1,19 +1,27 @@
 {
+    "extends": "../tsconfig-base",
     "compilerOptions": {
-        "noImplicitAny": true,
-        "removeComments": true,
+        "removeComments": false,
+        "outFile": "../../built/local/server.js",
         "preserveConstEnums": true,
-        "out": "../../built/local/tsserver.js",
-        "sourceMap": true,
-        "stripInternal": true
+        "types": [
+            "node"
+        ]
     },
+    "references": [
+        { "path": "../compiler" },
+        { "path": "../jsTyping" },
+        { "path": "../services" }
+    ],
     "files": [
-        "../services/shims.ts",
-        "../services/utilities.ts",
-        "node.d.ts",
+        "types.ts",
+        "utilities.ts",
+        "protocol.ts",
+        "scriptInfo.ts",
+        "typingsCache.ts",
+        "project.ts",
         "editorServices.ts",
-        "protocol.d.ts",
         "session.ts",
-        "server.ts"
+        "scriptVersionCache.ts"
     ]
 }

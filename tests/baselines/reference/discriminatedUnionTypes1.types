@@ -1,7 +1,5 @@
 === tests/cases/conformance/types/union/discriminatedUnionTypes1.ts ===
 interface Square {
->Square : Square
-
     kind: "square";
 >kind : "square"
 
@@ -10,8 +8,6 @@ interface Square {
 }
 
 interface Rectangle {
->Rectangle : Rectangle
-
     kind: "rectangle";
 >kind : "rectangle"
 
@@ -23,8 +19,6 @@ interface Rectangle {
 }
 
 interface Circle {
->Circle : Circle
-
     kind: "circle";
 >kind : "circle"
 
@@ -33,22 +27,18 @@ interface Circle {
 }
 
 type Shape = Square | Rectangle | Circle;
->Shape : Square | Rectangle | Circle
->Square : Square
->Rectangle : Rectangle
->Circle : Circle
+>Shape : Shape
 
 function area1(s: Shape) {
->area1 : (s: Square | Rectangle | Circle) => number
->s : Square | Rectangle | Circle
->Shape : Square | Rectangle | Circle
+>area1 : (s: Shape) => number
+>s : Shape
 
     if (s.kind === "square") {
 >s.kind === "square" : boolean
 >s.kind : "square" | "rectangle" | "circle"
->s : Square | Rectangle | Circle
+>s : Shape
 >kind : "square" | "rectangle" | "circle"
->"square" : string
+>"square" : "square"
 
         return s.size * s.size;
 >s.size * s.size : number
@@ -64,7 +54,7 @@ function area1(s: Shape) {
 >s.kind : "rectangle" | "circle"
 >s : Rectangle | Circle
 >kind : "rectangle" | "circle"
->"circle" : string
+>"circle" : "circle"
 
         return Math.PI * s.radius * s.radius;
 >Math.PI * s.radius * s.radius : number
@@ -84,7 +74,7 @@ function area1(s: Shape) {
 >s.kind : "rectangle"
 >s : Rectangle
 >kind : "rectangle"
->"rectangle" : string
+>"rectangle" : "rectangle"
 
         return s.width * s.height;
 >s.width * s.height : number
@@ -97,22 +87,21 @@ function area1(s: Shape) {
     }
     else {
         return 0;
->0 : number
+>0 : 0
     }
 }
 
 function area2(s: Shape) {
->area2 : (s: Square | Rectangle | Circle) => number
->s : Square | Rectangle | Circle
->Shape : Square | Rectangle | Circle
+>area2 : (s: Shape) => number
+>s : Shape
 
     switch (s.kind) {
 >s.kind : "square" | "rectangle" | "circle"
->s : Square | Rectangle | Circle
+>s : Shape
 >kind : "square" | "rectangle" | "circle"
 
         case "square": return s.size * s.size;
->"square" : string
+>"square" : "square"
 >s.size * s.size : number
 >s.size : number
 >s : Square
@@ -122,7 +111,7 @@ function area2(s: Shape) {
 >size : number
 
         case "rectangle": return s.width * s.height;
->"rectangle" : string
+>"rectangle" : "rectangle"
 >s.width * s.height : number
 >s.width : number
 >s : Rectangle
@@ -132,7 +121,7 @@ function area2(s: Shape) {
 >height : number
 
         case "circle": return Math.PI * s.radius * s.radius;
->"circle" : string
+>"circle" : "circle"
 >Math.PI * s.radius * s.radius : number
 >Math.PI * s.radius : number
 >Math.PI : number
@@ -155,22 +144,21 @@ function assertNever(x: never): never {
 >new Error("Unexpected object: " + x) : Error
 >Error : ErrorConstructor
 >"Unexpected object: " + x : string
->"Unexpected object: " : string
+>"Unexpected object: " : "Unexpected object: "
 >x : never
 }
 
 function area3(s: Shape) {
->area3 : (s: Square | Rectangle | Circle) => number
->s : Square | Rectangle | Circle
->Shape : Square | Rectangle | Circle
+>area3 : (s: Shape) => number
+>s : Shape
 
     switch (s.kind) {
 >s.kind : "square" | "rectangle" | "circle"
->s : Square | Rectangle | Circle
+>s : Shape
 >kind : "square" | "rectangle" | "circle"
 
         case "square": return s.size * s.size;
->"square" : string
+>"square" : "square"
 >s.size * s.size : number
 >s.size : number
 >s : Square
@@ -180,7 +168,7 @@ function area3(s: Shape) {
 >size : number
 
         case "rectangle": return s.width * s.height;
->"rectangle" : string
+>"rectangle" : "rectangle"
 >s.width * s.height : number
 >s.width : number
 >s : Rectangle
@@ -190,7 +178,7 @@ function area3(s: Shape) {
 >height : number
 
         case "circle": return Math.PI * s.radius * s.radius;
->"circle" : string
+>"circle" : "circle"
 >Math.PI * s.radius * s.radius : number
 >Math.PI * s.radius : number
 >Math.PI : number
@@ -211,17 +199,16 @@ function area3(s: Shape) {
 }
 
 function area4(s: Shape) {
->area4 : (s: Square | Rectangle | Circle) => number
->s : Square | Rectangle | Circle
->Shape : Square | Rectangle | Circle
+>area4 : (s: Shape) => number
+>s : Shape
 
     switch (s.kind) {
 >s.kind : "square" | "rectangle" | "circle"
->s : Square | Rectangle | Circle
+>s : Shape
 >kind : "square" | "rectangle" | "circle"
 
         case "square": return s.size * s.size;
->"square" : string
+>"square" : "square"
 >s.size * s.size : number
 >s.size : number
 >s : Square
@@ -231,7 +218,7 @@ function area4(s: Shape) {
 >size : number
 
         case "rectangle": return s.width * s.height;
->"rectangle" : string
+>"rectangle" : "rectangle"
 >s.width * s.height : number
 >s.width : number
 >s : Rectangle
@@ -241,7 +228,7 @@ function area4(s: Shape) {
 >height : number
 
         case "circle": return Math.PI * s.radius * s.radius;
->"circle" : string
+>"circle" : "circle"
 >Math.PI * s.radius * s.radius : number
 >Math.PI * s.radius : number
 >Math.PI : number
@@ -261,7 +248,7 @@ function area4(s: Shape) {
 }
 
 type Message =
->Message : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>Message : Message
 
     { kind: "A", x: string } |
 >kind : "A"
@@ -275,16 +262,15 @@ type Message =
 >kind : "D"
 
 function f1(m: Message) {
->f1 : (m: { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }) => void
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
->Message : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>f1 : (m: Message) => void
+>m : Message
 
     if (m.kind === "A") {
 >m.kind === "A" : boolean
 >m.kind : "A" | "B" | "C" | "D"
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>m : Message
 >kind : "A" | "B" | "C" | "D"
->"A" : string
+>"A" : "A"
 
         m;  // { kind: "A", x: string }
 >m : { kind: "A"; x: string; }
@@ -294,7 +280,7 @@ function f1(m: Message) {
 >m.kind : "B" | "C" | "D"
 >m : { kind: "B" | "C"; y: number; } | { kind: "D"; }
 >kind : "B" | "C" | "D"
->"D" : string
+>"D" : "D"
 
         m;  // { kind: "D" }
 >m : { kind: "D"; }
@@ -306,16 +292,15 @@ function f1(m: Message) {
 }
 
 function f2(m: Message) {
->f2 : (m: { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }) => void
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
->Message : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>f2 : (m: Message) => void
+>m : Message
 
     if (m.kind === "A") {
 >m.kind === "A" : boolean
 >m.kind : "A" | "B" | "C" | "D"
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>m : Message
 >kind : "A" | "B" | "C" | "D"
->"A" : string
+>"A" : "A"
 
         return;
     }
@@ -324,32 +309,30 @@ function f2(m: Message) {
 }
 
 function f3(m: Message) {
->f3 : (m: { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }) => void
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
->Message : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>f3 : (m: Message) => void
+>m : Message
 
     if (m.kind === "X") {
 >m.kind === "X" : boolean
 >m.kind : "A" | "B" | "C" | "D"
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>m : Message
 >kind : "A" | "B" | "C" | "D"
->"X" : string
+>"X" : "X"
 
         m;  // never
->m : never
+>m : Message
     }
 }
 
 function f4(m: Message, x: "A" | "D") {
->f4 : (m: { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }, x: "A" | "D") => void
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
->Message : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>f4 : (m: Message, x: "A" | "D") => void
+>m : Message
 >x : "A" | "D"
 
     if (m.kind == x) {
 >m.kind == x : boolean
 >m.kind : "A" | "B" | "C" | "D"
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>m : Message
 >kind : "A" | "B" | "C" | "D"
 >x : "A" | "D"
 
@@ -359,24 +342,23 @@ function f4(m: Message, x: "A" | "D") {
 }
 
 function f5(m: Message) {
->f5 : (m: { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }) => void
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
->Message : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>f5 : (m: Message) => void
+>m : Message
 
     switch (m.kind) {
 >m.kind : "A" | "B" | "C" | "D"
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>m : Message
 >kind : "A" | "B" | "C" | "D"
 
         case "A":
->"A" : string
+>"A" : "A"
 
             m;  // { kind: "A", x: string }
 >m : { kind: "A"; x: string; }
 
             break;
         case "D":
->"D" : string
+>"D" : "D"
 
             m;  // { kind: "D" }
 >m : { kind: "D"; }
@@ -389,26 +371,25 @@ function f5(m: Message) {
 }
 
 function f6(m: Message) {
->f6 : (m: { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }) => void
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
->Message : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>f6 : (m: Message) => void
+>m : Message
 
     switch (m.kind) {
 >m.kind : "A" | "B" | "C" | "D"
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>m : Message
 >kind : "A" | "B" | "C" | "D"
 
         case "A":
->"A" : string
+>"A" : "A"
 
             m;  // { kind: "A", x: string }
 >m : { kind: "A"; x: string; }
 
         case "D":
->"D" : string
+>"D" : "D"
 
             m;  // { kind: "A", x: string } | { kind: "D" }
->m : { kind: "D"; } | { kind: "A"; x: string; }
+>m : { kind: "A"; x: string; } | { kind: "D"; }
 
             break;
         default:
@@ -418,20 +399,19 @@ function f6(m: Message) {
 }
 
 function f7(m: Message) {
->f7 : (m: { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }) => void
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
->Message : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>f7 : (m: Message) => void
+>m : Message
 
     switch (m.kind) {
 >m.kind : "A" | "B" | "C" | "D"
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>m : Message
 >kind : "A" | "B" | "C" | "D"
 
         case "A":
->"A" : string
+>"A" : "A"
 
         case "B":
->"B" : string
+>"B" : "B"
 
             return;
     }
@@ -440,21 +420,20 @@ function f7(m: Message) {
 }
 
 function f8(m: Message) {
->f8 : (m: { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }) => void
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
->Message : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>f8 : (m: Message) => void
+>m : Message
 
     switch (m.kind) {
 >m.kind : "A" | "B" | "C" | "D"
->m : { kind: "A"; x: string; } | { kind: "B" | "C"; y: number; } | { kind: "D"; }
+>m : Message
 >kind : "A" | "B" | "C" | "D"
 
         case "A":
->"A" : string
+>"A" : "A"
 
             return;
         case "D":
->"D" : string
+>"D" : "D"
 
             throw new Error();
 >new Error() : Error

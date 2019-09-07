@@ -7,9 +7,6 @@
 ////}
 /////*2*/e.a;
 
-goTo.marker('1');
-verify.quickInfoIs("const enum e");
-
-goTo.marker('2');
-verify.completionListContains("e", "const enum e");
-verify.quickInfoIs("const enum e");
+const text = "const enum e";
+verify.completions({ marker: "2", includes: { name: "e", text } });
+verify.quickInfos({ 1: text, 2: text });

@@ -15,21 +15,17 @@
 ////var /*3*/z = new /*2*/Foo();
 ////var /*5*/r2 = Foo./*4*/x;
 
-// this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
-edit.insert('');
+verify.quickInfos({
+    1: [
+        "(alias) class Foo",
+        "(alias) namespace Foo",
+        "import Foo = require('./mergedDeclarationsWithExportAssignment1_file0')"
+    ].join("\n"),
+    3: "var z: Foo",
+    5: "var r2: number",
+});
 
-goTo.marker('1');
-verify.quickInfoIs("import Foo = require('./mergedDeclarationsWithExportAssignment1_file0')");
-
-goTo.marker('2');
-verify.completionListContains('Foo');
-
-goTo.marker('3');
-verify.quickInfoIs('var z: Foo');
-
-goTo.marker('4');
-verify.completionListContains('x');
-
-goTo.marker('5');
-verify.quickInfoIs('var r2: number');
-
+verify.completions(
+    { marker: "2", includes: "Foo" },
+    { marker: "4", includes: "x" },
+);

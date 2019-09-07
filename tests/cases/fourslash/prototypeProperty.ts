@@ -4,8 +4,6 @@
 ////A./*1*/prototype;
 ////A./*2*/
 
-goTo.marker('1');
-verify.quickInfoIs('(property) A.prototype: A');
+verify.quickInfoAt("1", "(property) A.prototype: A");
 
-goTo.marker('2');
-verify.completionListContains('prototype', '(property) A.prototype: A');
+verify.completions({ marker: "2", includes: [{ name: "prototype", text: "(property) A.prototype: A" }] });

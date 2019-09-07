@@ -14,10 +14,10 @@ export function myFunction2() {
 }
 
 //// [systemModuleTargetES6.js]
-System.register([], function(exports_1, context_1) {
+System.register([], function (exports_1, context_1) {
     "use strict";
-    var __moduleName = context_1 && context_1.id;
     var MyClass, MyClass2;
+    var __moduleName = context_1 && context_1.id;
     function myFunction() {
         return new MyClass();
     }
@@ -27,16 +27,16 @@ System.register([], function(exports_1, context_1) {
     }
     exports_1("myFunction2", myFunction2);
     return {
-        setters:[],
-        execute: function() {
+        setters: [],
+        execute: function () {
             MyClass = class MyClass {
             };
             exports_1("MyClass", MyClass);
             MyClass2 = class MyClass2 {
                 static getInstance() { return MyClass2.value; }
             };
-            MyClass2.value = 42;
             exports_1("MyClass2", MyClass2);
+            MyClass2.value = 42;
         }
-    }
+    };
 });

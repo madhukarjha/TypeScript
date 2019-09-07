@@ -31,65 +31,78 @@
 /////*10*/extMod./*11*/m1./*12*/fooExp/*13q*/ort(/*13*/);
 ////var new/*14*/Var = new extMod.m1.m2./*15*/c();
 
-// this line triggers a semantic/syntactic error check, remove line when 788570 is fixed
-edit.insert('');
-
 goTo.file("commentsExternalModules_file0.ts");
-goTo.marker('1');
-verify.quickInfoIs("namespace m1", "Namespace comment");
+verify.quickInfoAt("1", "namespace m1", "Namespace comment");
 
-goTo.marker('2');
-verify.completionListContains("b", "var m1.b: number", "b's comment");
-verify.completionListContains("foo", "function foo(): number", "foo's comment");
+verify.completions({
+    marker: "2",
+    includes: [
+        { name: "b", text: "var b: number", documentation: "b's comment" },
+        { name: "foo", text: "function foo(): number", documentation: "foo's comment" },
+    ]
+});
 
-goTo.marker('3');
-verify.currentSignatureHelpDocCommentIs("foo's comment");
-goTo.marker('3q');
-verify.quickInfoIs("function foo(): number", "foo's comment");
+verify.signatureHelp({ marker: "3", docComment: "foo's comment" });
+verify.quickInfoAt("3q", "function foo(): number", "foo's comment");
 
-goTo.marker('4');
-verify.completionListContains("m1", "namespace m1", "Namespace comment");
+verify.completions({
+    marker: "4",
+    includes: { name: "m1", text: "namespace m1", documentation: "Namespace comment" },
+});
 
-goTo.marker('5');
-verify.memberListContains("b", "var m1.b: number", "b's comment");
-verify.memberListContains("fooExport", "function m1.fooExport(): number", "exported function");
-verify.memberListContains("m2", "namespace m1.m2");
+verify.completions({
+    marker: "5",
+    includes: [
+        { name: "b", text: "var m1.b: number", documentation: "b's comment" },
+        { name: "fooExport", text: "function m1.fooExport(): number", documentation: "exported function" },
+        { name: "m2", text: "namespace m1.m2", documentation: "m2 comments" },
+    ],
+});
 
-goTo.marker('6');
-verify.currentSignatureHelpDocCommentIs("exported function");
-goTo.marker('6q');
-verify.quickInfoIs("function m1.fooExport(): number", "exported function");
+verify.signatureHelp({ marker: "6", docComment: "exported function" });
+verify.quickInfoAt("6q", "function m1.fooExport(): number", "exported function");
 
-goTo.marker('7');
-verify.quickInfoIs("var myvar: m1.m2.c", "");
+verify.quickInfoAt("7", "var myvar: m1.m2.c");
 
-goTo.marker('8');
-verify.memberListContains("c", "constructor m1.m2.c(): m1.m2.c", "");
-verify.memberListContains("i", "var m1.m2.i: m1.m2.c", "i");
+verify.completions({
+    marker: "8",
+    includes: [
+        { name: "c", text: "constructor m1.m2.c(): m1.m2.c", documentation: "class comment;" },
+        { name: "i", text: "var m1.m2.i: m1.m2.c", documentation: "i" },
+    ],
+});
 
 goTo.file("commentsExternalModules_file1.ts");
-goTo.marker('9');
-verify.quickInfoIs('import extMod = require("./commentsExternalModules_file0")', "This is on import declaration");
+verify.quickInfoAt("9", 'import extMod = require("./commentsExternalModules_file0")', "This is on import declaration");
 
-goTo.marker('10');
-verify.completionListContains("extMod", 'import extMod = require("./commentsExternalModules_file0")', "This is on import declaration");
+verify.completions(
+    {
+        marker: "10",
+        includes: { name: "extMod", text: 'import extMod = require("./commentsExternalModules_file0")', documentation: "This is on import declaration" },
+    },
+    {
+        marker: "11",
+        includes: { name: "m1", text: "namespace extMod.m1", documentation: "Namespace comment" },
+    },
+    {
+        marker: "12",
+        includes: [
+            { name: "b", text: "var extMod.m1.b: number", documentation: "b's comment" },
+            { name: "fooExport", text: "function extMod.m1.fooExport(): number", documentation: "exported function" },
+            { name: "m2", text: "namespace extMod.m1.m2", documentation: "m2 comments" },
+        ],
+    },
+);
 
-goTo.marker('11');
-verify.memberListContains("m1", "namespace extMod.m1");
+verify.signatureHelp({ marker: "13", docComment: "exported function" });
+verify.quickInfoAt("13q", "function extMod.m1.fooExport(): number", "exported function");
 
-goTo.marker('12');
-verify.memberListContains("b", "var extMod.m1.b: number", "b's comment");
-verify.memberListContains("fooExport", "function extMod.m1.fooExport(): number", "exported function");
-verify.memberListContains("m2", "namespace extMod.m1.m2");
+verify.quickInfoAt("14", "var newVar: extMod.m1.m2.c");
 
-goTo.marker('13');
-verify.currentSignatureHelpDocCommentIs("exported function");
-goTo.marker('13q');
-verify.quickInfoIs("function extMod.m1.fooExport(): number", "exported function");
-
-goTo.marker('14');
-verify.quickInfoIs("var newVar: extMod.m1.m2.c", "");
-
-goTo.marker('15');
-verify.memberListContains("c", "constructor extMod.m1.m2.c(): extMod.m1.m2.c", "");
-verify.memberListContains("i", "var extMod.m1.m2.i: extMod.m1.m2.c", "i");
+verify.completions({
+    marker: "15",
+    exact: [
+        { name: "c", text: "constructor extMod.m1.m2.c(): extMod.m1.m2.c", documentation: "class comment;" },
+        { name: "i", text: "var extMod.m1.m2.i: extMod.m1.m2.c", documentation: "i" },
+    ],
+});

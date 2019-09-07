@@ -39,10 +39,118 @@
 ////var p: IPoint = new Shapes.Point(3, 4);
 ////var dist = p.getDist();
 
+verify.navigationTree({
+    "text": "<global>",
+    "kind": "script",
+    "childItems": [
+        {
+            "text": "dist",
+            "kind": "var"
+        },
+        {
+            "text": "IPoint",
+            "kind": "interface",
+            "childItems": [
+                {
+                    "text": "()",
+                    "kind": "call"
+                },
+                {
+                    "text": "new()",
+                    "kind": "construct"
+                },
+                {
+                    "text": "[]",
+                    "kind": "index"
+                },
+                {
+                    "text": "getDist",
+                    "kind": "method"
+                },
+                {
+                    "text": "prop",
+                    "kind": "property"
+                }
+            ]
+        },
+        {
+            "text": "p",
+            "kind": "var"
+        },
+        {
+            "text": "Shapes",
+            "kind": "module",
+            "childItems": [
+                {
+                    "text": "Point",
+                    "kind": "class",
+                    "kindModifiers": "export",
+                    "childItems": [
+                        {
+                            "text": "constructor",
+                            "kind": "constructor"
+                        },
+                        {
+                            "text": "getDist",
+                            "kind": "method"
+                        },
+                        {
+                            "text": "getOrigin",
+                            "kind": "method",
+                            "kindModifiers": "private,static"
+                        },
+                        {
+                            "text": "origin",
+                            "kind": "property",
+                            "kindModifiers": "static"
+                        },
+                        {
+                            "text": "value",
+                            "kind": "getter"
+                        },
+                        {
+                            "text": "value",
+                            "kind": "setter"
+                        },
+                        {
+                            "text": "x",
+                            "kind": "property",
+                            "kindModifiers": "public"
+                        },
+                        {
+                            "text": "y",
+                            "kind": "property",
+                            "kindModifiers": "public"
+                        }
+                    ]
+                },
+                {
+                    "text": "Values",
+                    "kind": "enum",
+                    "childItems": [
+                        {
+                            "text": "value1",
+                            "kind": "enum member"
+                        },
+                        {
+                            "text": "value2",
+                            "kind": "enum member"
+                        },
+                        {
+                            "text": "value3",
+                            "kind": "enum member"
+                        }
+                    ]
+                }
+            ]
+        }
+    ]
+});
+
 verify.navigationBar([
     {
         "text": "<global>",
-        "kind": "module",
+        "kind": "script",
         "childItems": [
             {
                 "text": "dist",
@@ -155,15 +263,15 @@ verify.navigationBar([
         "childItems": [
             {
                 "text": "value1",
-                "kind": "property"
+                "kind": "enum member"
             },
             {
                 "text": "value2",
-                "kind": "property"
+                "kind": "enum member"
             },
             {
                 "text": "value3",
-                "kind": "property"
+                "kind": "enum member"
             }
         ],
         "indent": 2

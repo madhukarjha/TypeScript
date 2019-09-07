@@ -11,9 +11,9 @@ function a(x: string | number) {
 >x : string | number
 >undefined : undefined
 >typeof x !== "number" : boolean
->typeof x : string
+>typeof x : "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >x : string | number
->"number" : string
+>"number" : "number"
 >x = undefined : undefined
 >x : string | number
 >undefined : undefined
@@ -33,9 +33,9 @@ function b(x: string | number) {
 >x : string | number
 >undefined : undefined
 >typeof x !== "number" : boolean
->typeof x : string
+>typeof x : "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >x : string | number
->"number" : string
+>"number" : "number"
 >x = undefined : undefined
 >x : string | number
 >undefined : undefined
@@ -58,9 +58,9 @@ function c(x: string | number) {
 >x : string | number
 >undefined : undefined
 >typeof x !== "number" : boolean
->typeof x : string
+>typeof x : "string" | "number" | "bigint" | "boolean" | "symbol" | "undefined" | "object" | "function"
 >x : string | number
->"number" : string
+>"number" : "number"
 >x = undefined : undefined
 >x : string | number
 >undefined : undefined
@@ -72,6 +72,6 @@ function c(x: string | number) {
 >cond : boolean
     }
     x; // string | number
->x : number | string
+>x : string | number
 }
 

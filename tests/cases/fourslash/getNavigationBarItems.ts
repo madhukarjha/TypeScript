@@ -5,10 +5,31 @@
 ////    ["bar"]: string;
 ////}
 
+verify.navigationTree({
+    "text": "<global>",
+    "kind": "script",
+    "childItems": [
+        {
+            "text": "C",
+            "kind": "class",
+            "childItems": [
+                {
+                    "text": "[\"bar\"]",
+                    "kind": "property"
+                },
+                {
+                    "text": "foo",
+                    "kind": "property"
+                }
+            ]
+        }
+    ]
+});
+
 verify.navigationBar([
     {
         "text": "<global>",
-        "kind": "module",
+        "kind": "script",
         "childItems": [
             {
                 "text": "C",
@@ -31,4 +52,4 @@ verify.navigationBar([
         ],
         "indent": 1
     }
-])
+]);
